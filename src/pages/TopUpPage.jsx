@@ -76,8 +76,8 @@ function TopUpPage() {
         <div className="flex justify-between items-center">
           {/* kiri */}
           <div className="w-full">
-            <h1>Silahkan masukan</h1>
-            <h1>Nominal Top Up</h1>
+            <h1 className="text-xl mt-5">Silahkan masukan</h1>
+            <h1 className="text-2xl font-bold mb-10 mt-2">Nominal Top Up</h1>
             <div className="flex items-center">
               <div className="w-full">
                 <div className="flex items-center border border-gray-400 rounded-lg h-10 px-4">
