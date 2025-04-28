@@ -8,7 +8,7 @@ function Service() {
   const [selectedService, setSelectedService] = useState(null);
   const [serviceClick, setServiceClick] = useState(false);
 
-  const { pay, saldo } = useTransactionStore();
+  const { pay, balance, saldo } = useTransactionStore();
 
   useEffect(() => {
     async function fetchService() {
@@ -29,50 +29,55 @@ function Service() {
   };
 
   const handleButtonClick = async () => {
-    if (selectedService) {
-      const result = await Swal.fire({
-        title: "Apakah kamu yakin?",
-        text: `Beli ${
-          selectedService.service_name
-        } senilai Rp${selectedService.service_tariff.toLocaleString()}`,
-        imageUrl: "src/assets/logo.png", // Pastikan path ke logo sudah benar
-        imageWidth: 100,
-        imageHeight: 100,
-        showCancelButton: true,
-        confirmButtonText: "Bayar!",
-        cancelButtonText: "Batal",
-      });
+    if (!selectedService) return;
 
-      if (result.isConfirmed) {
-        try {
-          if (selectedService.service_tariff <= saldo) {
-            await pay(selectedService);
-            setSelectedService(null);
-            setServiceClick(false);
-            await saldo();
-            Swal.fire({
-              title: "Sukses!",
-              text: `Pembayaran ${selectedService.service_name} sebesar Rp${selectedService.service_tariff.toLocaleString()} berhasil!`,
-              icon: "success",
-              confirmButtonText: "Kembali Ke Beranda",
-            });
-          } else {
-            Swal.fire({
-              title: "Gagal!",
-              text: "Saldo tidak cukup untuk melakukan pembayaran.",
-              icon: "error",
-              confirmButtonText: "OK",
-            });
-          }
-        } catch (error) {
-          console.error(error)
-          Swal.fire({
-            title: "Gagal!",
-            text: "Terjadi kesalahan, coba lagi nanti.",
+    const result = await Swal.fire({
+      title: "Konfirmasi Pembayaran",
+      text: `Apakah kamu yakin ingin membeli ${
+        selectedService.service_name
+      } senilai Rp${selectedService.service_tariff}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Bayar",
+      cancelButtonText: "Batal",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        if (Number(balance.balance) >= Number(selectedService.service_tariff)) {
+        // Cek saldo sebelum bayar
+          await pay(selectedService);
+          setSelectedService(null);
+          setServiceClick(false);
+          await saldo(); // update saldo
+
+          await Swal.fire({
+            title: "Berhasil!",
+            text: `Pembayaran ${
+              selectedService.service_name
+            } sebesar Rp${
+              selectedService.service_tariff} berhasil.`,
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        } else {
+          console.log("Saldo:", balance, "Tarif:", selectedService.service_tariff)
+          console.log(Number(balance) >= Number(selectedService.service_tariff))
+          await Swal.fire({
+            title: "Saldo Tidak Cukup",
+            text: "Saldo kamu tidak mencukupi untuk melakukan pembayaran.",
             icon: "error",
             confirmButtonText: "OK",
           });
         }
+      } catch (error) {
+        console.error("Gagal bayar:", error);
+        await Swal.fire({
+          title: "Gagal!",
+          text: "Terjadi kesalahan saat memproses pembayaran. Coba lagi nanti.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
       }
     }
   };

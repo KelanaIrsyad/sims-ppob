@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import { MdOutlineAlternateEmail } from "react-icons/md";
+import { MdOutlineMoney } from "react-icons/md";
 import { useTransactionStore } from "../store/useTransactionStore";
 import Swal from "sweetalert2";
 
@@ -18,11 +18,9 @@ function TopUpPage() {
       const result = await Swal.fire({
         title: "Apakah kamu yakin?",
         text: `Kamu akan melakukan top-up sebesar Rp${amount.toLocaleString()}`,
-        imageUrl: 'src/assets/logo.png',
-        imageWidth: 100,
-        imageHeight: 100,
+        icon: "question",
         showCancelButton: true,
-        confirmButtonText: "Ya, top-up!",
+        confirmButtonText: "Ya, lanjutkan Top Up!",
         cancelButtonText: "Batal",
       });
 
@@ -70,7 +68,7 @@ function TopUpPage() {
             <div className="flex items-center">
               <div className="w-full">
                 <div className="flex items-center border border-gray-400 rounded-lg h-10 px-4">
-                  <MdOutlineAlternateEmail className="text-gray-400 mr-2 mt-1" />
+                  <MdOutlineMoney className="text-gray-400 mr-2 mt-1" />
                   <input
                     className="outline-none w-full"
                     type="number"

@@ -9,7 +9,7 @@ function Navbar() {
                 {/* Logo */}
                 <div className="flex items-center pl-16">
                     <Link to={"/"} className="flex items-center"> 
-                            <img src="/src/assets/Logo.png" alt="logo" className="mx-2" />
+                            <img src="/assets/Logo.png" alt="logo" className="mx-2" />
                             <h1 className="text-xl font-bold">SIMS PPOB</h1>
                     </Link>
                 </div>

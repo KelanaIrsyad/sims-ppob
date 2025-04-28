@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { MdOutlineAlternateEmail, MdOutlinePerson } from "react-icons/md";
 import { HiPencil } from "react-icons/hi";
 import { useAuthStore } from "../store/useAuthStore";
-import DefaultProfile from "../assets/Profile Photo.png";
+import DefaultProfile from "/assets/Profile Photo.png";
 
 function ProfilePage() {
   const {

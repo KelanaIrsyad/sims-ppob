@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useTransactionStore } from "../store/useTransactionStore";
-import DefaultProfile from "../assets/Profile Photo.png";
+import DefaultProfile from "/assets/Profile Photo.png";
 
 function Hero() {
   //checkAuth dulu biar authUser bisa diakses
@@ -32,7 +32,7 @@ function Hero() {
         {/* Saldo */}
         <div className="relative w-1/2 flex flex-col justify-center items-center mx-auto max-w-2xl">
           <img
-            src="src/assets/Background Saldo.png"
+            src="/assets/Background Saldo.png"
             alt=""
             className="w-full h-auto"
           />

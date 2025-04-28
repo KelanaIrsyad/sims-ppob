@@ -54,7 +54,7 @@ function RegisterPage() {
         {/* Kiri bagian form */}
         <div className="w-1/2 flex flex-col justify-center items-center mx-auto">
           <div className="flex justify-center items-center">
-            <img src="/src/assets/Logo.png" alt="logo" className="mx-2" />
+            <img src="/assets/Logo.png" alt="logo" className="mx-2" />
             <h1 className="text-2xl font-bold">SIMS PPBO</h1>
           </div>
           <div>
@@ -166,7 +166,7 @@ function RegisterPage() {
 
         {/* Kanan bagian gambar */}
         <div className="w-1/2">
-          <img src="/src/assets/Illustrasi Login.png" alt="konten" />
+          <img src="/assets/Illustrasi Login.png" alt="konten" />
         </div>
       </div>
     </>
