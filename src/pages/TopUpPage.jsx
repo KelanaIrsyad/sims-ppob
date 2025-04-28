@@ -14,39 +14,52 @@ function TopUpPage() {
   }, [saldo]);
 
   const handleTopup = async () => {
-    if (amount >= 10000 && amount <= 1000000) {
+    if (amount > 1000000) {
+      await Swal.fire({
+        title: "Gagal!",
+        text: "Top-up tidak boleh lebih dari Rp1.000.000.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    } else if (amount < 10000) {
+      await Swal.fire({
+        title: "Gagal!",
+        text: "Minimal top-up adalah Rp10.000.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    } else {
       const result = await Swal.fire({
-        title: "Apakah kamu yakin?",
-        text: `Kamu akan melakukan top-up sebesar Rp${amount.toLocaleString()}`,
+        title: "Anda yakin untuk Top Up sebesar",
+        text: `Rp${amount.toLocaleString()}`,
         icon: "question",
         showCancelButton: true,
         confirmButtonText: "Ya, lanjutkan Top Up!",
         cancelButtonText: "Batal",
       });
-
+  
       if (result.isConfirmed) {
         try {
           await topUp(amount);
           await saldo();
           setAmount("");
-
-          // Menampilkan alert sukses
-          Swal.fire({
+  
+          await Swal.fire({
             title: "Sukses!",
-            text: `Top-up sebesar Rp${amount.toLocaleString()} berhasil dilakukan.`,
+            text: `Top-up sebesar Rp${amount.toLocaleString()} berhasil`,
             icon: "success",
-            confirmButtonText: "OK",
+            confirmButtonText: "Kembali ke Beranda",
           });
         } catch (error) {
-          console.log(error)
-          Swal.fire({
+          console.error(error);
+          await Swal.fire({
             title: "Gagal!",
             text: "Terjadi kesalahan, coba lagi nanti.",
             icon: "error",
-            confirmButtonText: "OK",
+            confirmButtonText: "Kembali ke Beranda",
           });
         }
-      } 
+      }
     }
   };
 
@@ -79,9 +92,9 @@ function TopUpPage() {
                 </div>
                 <button
                   onClick={handleTopup}
-                  disabled={amount < 0}
+                  disabled={amount <= 0}
                   className={`w-full bg-blue-600 rounded-md p-2 mt-3 ${
-                    amount < 9999
+                    amount <= 0
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-red-500 hover:bg-red-600 text-white"
                   }`}
